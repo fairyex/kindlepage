@@ -25,14 +25,14 @@
     <div id="all">
         <div id="content">
             <input type="text" id="newtag"/>
-            <div id="add" onclick="alert('hello world')">+</div>
-            <div id="b">版本号：3</div>
+            <div id="add" onclick="javascript:document.getElementById("list").innerHTML+='<li>'+document.getElementById('newtag').value+'</li>'">+</div>
+            <div id="b">版本号：5</div>
             <ul id="list">
             </ul>
         </div>
     </div>
 <script>
-    document.getElementById("b").innerHTML = "版本号：5";
+    document.getElementById("b").innerHTML = "版本号：7";
     var fx = function(o,p=0){return document.querySelectorAll(o)[p]}
     /*var tags = "";
 
