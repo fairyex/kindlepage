@@ -56,16 +56,16 @@
             read_tag();
         }
         else{}*/
+        fx("#list").innerHTML+="<li onclick='finish_tag(this)'>"+fx("#newtag").value+"</li>";
         fx("#newtag").value = "";
-        fx("#list").innerHTML+="<li onclick='this.style.display = 'none''>"+fx("#newtag").value+"</li>";
     }
 
-/*
     function finish_tag(tag_content){
-        tags.data.splice(tags.data.indexOf(tag_content),1);
+        /*tags.data.splice(tags.data.indexOf(tag_content),1);
         localStorage["tags"] = JSON.stringify(tags);
-        read_tag();
-    }*/
+        read_tag();*/
+        tag_content.style.display = "none";
+    }
 
 </script>
 </body>
