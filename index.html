@@ -26,32 +26,32 @@
         <div id="content">
             <input type="text" id="newtag"/>
             <div id="add" onclick="add_tag()">+</div>
-            <div id="b">版本号：7</div>
+            <div id="b">版本号：10</div>
             <ul id="list">
             </ul>
         </div>
     </div>
 <script type="text/javascript">
-    var tags = "";
+    var tags = [];
 
     if(!localStorage["tags"]){
-        localStorage["tags"]='{"version":1,"data":[]}';
-        tags = JSON.parse(localStorage["tags"]);
+        localStorage["tags"]="'text','text'";
+        tags = localStorage["tags"].split(",");
     }
-    else{tags = JSON.parse(localStorage["tags"]);}
+    else{tags = localStorage["tags"].split(",");}
 
     function read_tag(){
         document.querySelector("#list").innerHTML = ""
-        for (i=0;i<tags.data.length;i++) {
-            document.querySelector("#list").innerHTML+="<li onclick='finish_tag(this.innerText)'>"+tags.data[i]+"</li>";
+        for (i=0;i<tags.length;i++) {
+            document.querySelector("#list").innerHTML+="<li onclick='finish_tag(this.innerText)'>"+tags[i]+"</li>";
         }
     }
     read_tag();
 
     function add_tag(){
         if(document.querySelector("#newtag").value){
-            tags.data.unshift(document.querySelector("#newtag").value);
-            localStorage["tags"] = JSON.stringify(tags);
+            tags.unshift(document.querySelector("#newtag").value);
+            localStorage["tags"] = tags.join(",");
             document.querySelector("#newtag").value = "";
             read_tag();
         }
@@ -59,8 +59,8 @@
     }
 
     function finish_tag(tag_content){
-        tags.data.splice(tags.data.indexOf(tag_content),1);
-        localStorage["tags"] = JSON.stringify(tags);
+        tags.splice(tags.indexOf(tag_content),1);
+        localStorage["tags"] = tags.join(",");
         read_tag();
     }
 
