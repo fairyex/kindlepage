@@ -9,62 +9,140 @@
     <link rel="stylesheet" href="">
     <script src=""></script>
     <style>
-        * {margin: 0;padding: 0;}
-        li {list-style: none;}
-        body {height: 100%;width:100%;}
-        #all {height: 100%;width:100%;overflow: hidden;}
-        #content {height: 100%;width:100%;overflow-y: scroll;}
-        #newtag {height:40px;width:60%;margin:20px 0 20px 8%;border: 1px solid black;border-radius: 30px;padding-left: 20px;padding-right:20px;font-size:20px;}
-        #add {color:white;height:40px;width:40px;border-radius: 40px;background-color: black;font-size: 30px;font-weight: bolder;position: absolute;right:12%;top:20px;line-height: 40px;text-align: center;}
-        #list {width: 90%;margin-top: 20px;margin-left: 5%;}
-        #list li {font-size: 80px;font-weight: bold;margin-top: 30px;}
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        #all {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #content {
+            height: 100%;
+            width: 100%;
+            overflow-y: scroll;
+        }
+
+        #newtag {
+            height: 40px;
+            width: 60%;
+            margin: 20px 0 20px 8%;
+            border: 1px solid black;
+            border-radius: 30px;
+            padding-left: 20px;
+            padding-right: 20px;
+            font-size: 20px;
+        }
+
+        #add {
+            color: white;
+            height: 40px;
+            width: 40px;
+            border-radius: 40px;
+            background-color: black;
+            font-size: 30px;
+            font-weight: bolder;
+            position: absolute;
+            right: 12%;
+            top: 20px;
+            line-height: 40px;
+            text-align: center;
+        }
+
+        #list {
+            width: 90%;
+            margin-top: 20px;
+            margin-left: 5%;
+        }
+
+        #list li {
+            font-size: 80px;
+            font-weight: bold;
+            margin-top: 30px;
+        }
+
+        #b {
+            width: 100%;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
     <div id="all">
         <div id="content">
-            <input type="text" id="newtag"/>
+            <input type="text" id="newtag" />
             <div id="add" onclick="add_tag()">+</div>
-            <div id="b">版本号：10</div>
+            <div id="b">版本号：12</div>
             <ul id="list">
             </ul>
         </div>
     </div>
-<script type="text/javascript">
-    var tags = [];
+    <script type="text/javascript">
+        var tags = [];
 
-    if(!localStorage["tags"]){
-        localStorage["tags"]="'text','text'";
-        tags = localStorage["tags"].split(",");
-    }
-    else{tags = localStorage["tags"].split(",");}
-
-    function read_tag(){
-        document.querySelector("#list").innerHTML = ""
-        for (i=0;i<tags.length;i++) {
-            document.querySelector("#list").innerHTML+="<li onclick='finish_tag(this.innerText)'>"+tags[i]+"</li>";
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toGMTString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
         }
-    }
-    read_tag();
 
-    function add_tag(){
-        if(document.querySelector("#newtag").value){
-            tags.unshift(document.querySelector("#newtag").value);
-            localStorage["tags"] = tags.join(",");
-            document.querySelector("#newtag").value = "";
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i].trim();
+                if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+            }
+            return "";
+        }
+
+
+        var tagcookie = getCookie("tags");
+        if (tagcookie == "") {
+            setCookie("tags", "text,text", 365);
+            tags = getCookie("tags").split(",");
+        }
+        else { tags = getCookie("tags").split(","); }
+
+        function read_tag() {
+            document.querySelector("#list").innerHTML = ""
+            for (i = 0; i < tags.length; i++) {
+                document.querySelector("#list").innerHTML += "<li onclick='finish_tag(this.innerText)'>" + tags[i] + "</li>";
+            }
+        }
+        read_tag();
+
+        function add_tag() {
+            if (document.querySelector("#newtag").value) {
+                tags.unshift(document.querySelector("#newtag").value);
+                setCookie("tags",tags.join(","),365);
+                document.querySelector("#newtag").value = "";
+                read_tag();
+            }
+            else { alert("不可以是空的") }
+        }
+
+        function finish_tag(tag_content) {
+            tags.splice(tags.indexOf(tag_content), 1);
+            setCookie("tags",tags.join(","),365);
             read_tag();
         }
-        else{alert("不可以是空的")}
-    }
 
-    function finish_tag(tag_content){
-        tags.splice(tags.indexOf(tag_content),1);
-        localStorage["tags"] = tags.join(",");
-        read_tag();
-    }
-
-</script>
+    </script>
 </body>
 
 </html>
