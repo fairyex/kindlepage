@@ -26,7 +26,7 @@
         <div id="content">
             <input type="text" id="newtag"/>
             <div id="add" onclick="add_tag()">+</div>
-            <div id="b">版本号：19</div>
+            <div id="b">版本号：2</div>
             <ul id="list">
             </ul>
         </div>
@@ -48,7 +48,7 @@
         }
     }
     read_tag();*/
-
+    localStorage["tags"] = "hello localstorage"
     alert(localStorage["tags"])
 
     function add_tag(){
