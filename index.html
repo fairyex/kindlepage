@@ -15,7 +15,7 @@
         #all {height: 100%;width:100%;overflow: hidden;}
         #content {height: 100%;width:100%;overflow-y: scroll;}
         #newtag {height:40px;width:60%;margin:20px 0 20px 8%;border: 1px solid black;border-radius: 30px;padding-left: 20px;padding-right:20px;font-size:20px;}
-        #add {color:white;height:40px;width:40px;border-radius: 40px;background-color: black;font-size: 30px;font-weight: bolder;position: absolute;right:12%;top:20px;line-height: 35px;text-align: center;}
+        #add {color:white;height:40px;width:40px;border-radius: 40px;background-color: black;font-size: 30px;font-weight: bolder;position: absolute;right:12%;top:20px;line-height: 40px;text-align: center;}
         #list {width: 90%;margin-top: 20px;margin-left: 5%;}
         #list li {font-size: 50px;font-weight: bold;margin-top: 20px;}
     </style>
@@ -34,7 +34,7 @@
     var fx = function(o,p=0){return document.querySelectorAll(o)[p]}
     var tags = "";
 
-    if(localStorage["tags"]==undefined || localStorage["tags"]==null){
+    /*if(localStorage["tags"]==undefined || localStorage["tags"]==null){
         localStorage["tags"]='{"version":1,"data":[]}';
         tags = JSON.parse(localStorage["tags"]);
     }
@@ -46,7 +46,7 @@
             fx("#list").innerHTML+="<li onclick='finish_tag(this.innerText)'>"+tags.data[i]+"</li>";
         }
     }
-    read_tag();
+    read_tag();*/
 
     function add_tag(){
         /*if(fx("#newtag").value != "" || fx("#newtag").value != null){
@@ -57,14 +57,15 @@
         }
         else{}*/
         fx("#newtag").value = "";
-        fx("#list").innerHTML+="<li onclick='finish_tag(this.innerText)'>"+fx("#newtag").value+"</li>";
+        fx("#list").innerHTML+="<li onclick='this.style.display = 'none''>"+fx("#newtag").value+"</li>";
     }
 
+/*
     function finish_tag(tag_content){
         tags.data.splice(tags.data.indexOf(tag_content),1);
         localStorage["tags"] = JSON.stringify(tags);
         read_tag();
-    }
+    }*/
 
 </script>
 </body>
