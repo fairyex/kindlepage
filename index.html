@@ -1,12 +1,72 @@
-<html>
-  <head>
-  </head>
-<style>
-  h5 {font-size:50px;width:100%;text-align:center;}
-</style>
+<!DOCTYPE html>
+<html lang="zh-CN">
 
-  <body>
-<h5>钱迹 Icon Demo</h5>
-    <input type="text"></input>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Kindle 待办</title>
+    <link rel="stylesheet" href="">
+    <script src=""></script>
+    <style>
+        * {margin: 0;padding: 0;}
+        li {list-style: none;}
+        body {height: 100%;width:100%;}
+        #all {height: 100%;width:100%;overflow: hidden;}
+        #content {height: 100%;width:100%;overflow-y: scroll;}
+        #newtag {height:40px;width:60%;margin:20px 0 20px 8%;border: 1px solid black;border-radius: 30px;padding-left: 20px;padding-right:20px;font-size:20px;}
+        #add {color:white;height:40px;width:40px;border-radius: 40px;background-color: black;font-size: 30px;font-weight: bolder;position: absolute;right:8%;top:20px;line-height: 35px;text-align: center;}
+        #list {width: 90%;margin-top: 20px;margin-left: 5%;}
+        #list li {font-size: 50px;font-weight: bold;margin-top: 20px;}
+    </style>
+</head>
+
+<body>
+    <div id="all">
+        <div id="content">
+            <input type="text" id="newtag"/>
+            <div id="add" onclick="add_tag()">+</div>
+            <ul id="list">
+                <li>这是第一个列表</li>
+                <li>或多个ii反馈给临时决定更换</li>
+            </ul>
+        </div>
+    </div>
+<script>
+    var fx = function(o,p=0){return document.querySelectorAll(o)[p]}
+    var tags = "";
+
+    if(localStorage["tags"]==undefined || localStorage["tags"]==null){
+        localStorage["tags"]='{"version":1,"data":[]}';
+        tags = JSON.parse(localStorage["tags"]);
+    }
+    else{tags = JSON.parse(localStorage["tags"]);}
+
+    function read_tag(){
+        fx("#list").innerHTML = ""
+        for (i=0;i<tags.data.length;i++) {
+            fx("#list").innerHTML+="<li onclick='finish_tag(this.innerText)'>"+tags.data[i]+"</li>";
+        }
+    }
+    read_tag();
+
+    function add_tag(){
+        if(fx("#newtag").value != "" || fx("#newtag").value != null){
+            tags.data.unshift(fx("#newtag").value);
+            localStorage["tags"] = JSON.stringify(tags);
+            fx("#newtag").value = "";
+            read_tag();
+        }
+        else{}
+    }
+
+    function finish_tag(tag_content){
+        tags.data.splice(tags.data.indexOf(tag_content),1);
+        localStorage["tags"] = JSON.stringify(tags);
+        read_tag();
+    }
+
+</script>
+</body>
+
 </html>
