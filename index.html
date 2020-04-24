@@ -26,7 +26,7 @@
         <div id="content">
             <input type="text" id="newtag"/>
             <div id="add" onclick="add_tag()">+</div>
-            <div id="b">版本号：17</div>
+            <div id="b">版本号：18</div>
             <ul id="list">
             </ul>
         </div>
@@ -57,8 +57,8 @@
             read_tag();
         }
         else{}*/
-        document.querySelectorA("#list").innerHTML+="<li onclick='finish_tag(this)'>"+document.querySelectorA("#newtag").value+"</li>";
-        document.querySelectorA("#newtag").value = "";
+        document.querySelector("#list").innerHTML+="<li onclick='finish_tag(this)'>"+document.querySelector("#newtag").value+"</li>";
+        document.querySelector("#newtag").value = "";
     }
 
     function finish_tag(tag_content){
